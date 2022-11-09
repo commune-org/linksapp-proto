@@ -1,0 +1,8 @@
+front/target
+front/Cargo.lock
+front/static
+front/assets
+front/dist
+front/pkg
+api/target
+api/Cargo.lock

@@ -1,0 +1,70 @@
+[package]
+name = "api"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+base64 = "0.13.0"
+actix-rt = "2.7.0"
+actix-web = "4.0.1"
+actix-cors = "0.6.1"
+actix-session = "0.6.2"
+actix-multipart = "0.4.0"
+actix-identity = "0.4.0"
+# #actix-web = { version = "2.0.0", features = ["openssl"] }
+lazy_static = "1.4.0"
+config = "0.13.1"
+
+deadpool-postgres = { version = "0.10.2",  features = ["serde"] }
+derive_more = "0.99.17"
+dotenv = "0.15.0"
+
+# openssl = { version = "0.10", features = ["v110"] }
+
+serde = { version = "1.0.137", features = ["derive"] }
+tokio = { version = "1.18.1", features = ["full"] }
+tokio-pg-mapper = "0.2.0"
+tokio-pg-mapper-derive = "0.2.0"
+
+tokio-postgres = { version = "0.7.6", features = ["with-chrono-0_4", "with-uuid-0_8"] }
+log = "0.4.16"
+env_logger = "0.9.0"
+serde_json = "1.0.80"
+jsonwebtoken = "8.1.0"
+openid = "0.9.3"
+smallvec = "1.8.0"
+rand = "0.8.5"
+arc-swap = "1.5.0"
+crossbeam = "0.8.1"
+dirs = "4.0.0"
+envy = "0.4.2"
+
+# #rust-argon2 = "0.5"
+chrono = { version = "0.4.19", features = ["serde"] }
+
+postgres_query = "0.3.3"
+postgres_query_macro = "0.3.1"
+proc-macro-hack = "0.5.19"
+postgres-types = "0.2.3"
+futures = "0.3.21"
+async-trait = "0.1.53"
+url = "2.2.2"
+# structopt = "0.3.26"
+thiserror = "1.0.9"
+
+anyhow = "1.0.57"
+serde_derive = "1.0.137"
+sanitize-filename = "0.3.0"
+# askama = "0.10.3"
+# im = "15.0.0"
+# #lettre = "0.9.3"
+# lettre = "0.10.0-alpha.3"
+# uuid = { version = "0.8", features = ["serde", "v4"] }
+# #yarte = { version = "*", features = ["with-actix-web"]  }
+# argonautica = "0.2.0"
+# sanitize-filename = "0.2.1"
+# v_htmlescape = "~0.4.5"
+# #pretty_assertions = "0.6.1"
+# listenfd = "0.3"

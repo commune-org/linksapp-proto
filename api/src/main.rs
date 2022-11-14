@@ -1,13 +1,14 @@
 use actix_cors::Cors;
 use actix_web::cookie::Key;
 use actix_web::main;
-use auth::update_secret;
+// use auth::update_secret;
 use time::Duration;
 
 use std::collections::HashMap;
 
-pub mod auth;
+// pub mod auth;
 pub mod configs;
+pub mod users;
 
 // pub mod content;
 pub mod errors;
@@ -29,7 +30,7 @@ pub mod errors;
 //     logout, main_css, main_js, register_email, register_html, register_user, update_secret,
 // };
 
-use crate::auth::{change_password_user, register_user};
+// use crate::auth::{change_password_user, register_user};
 use crate::configs::{SecConfig, KEY_LENGTH};
 
 use crate::errors::ServiceError;
@@ -66,10 +67,11 @@ pub fn get_random_string(n: usize) -> String {
         .collect()
 }
 
-async fn update_secrets() -> Result<(), ServiceError> {
-    update_secret(&CONFIG.secret_path).await?;
-    update_secret(&CONFIG.jwt_secret_path).await
-}
+// async fn update_secrets() -> Result<(), ServiceError> {
+//     update_secret(&CONFIG.secret_path).await?;
+//     update_secret(&CONFIG.jwt_secret_path).await
+// }
+
 //
 // async fn update_secreto() -> Result<(), ServiceError> {
 //     update_secret(&CONFIG.secret_path).await?;
@@ -90,7 +92,7 @@ async fn main() -> io::Result<()> {
     std::env::set_var("RUST_BACKTRACE", "full");
     env_logger::init();
 
-    update_secrets().await;
+    // update_secrets().await;
 
     let config = configs::Config::from_env().unwrap();
     let domain = config.srv_cnf.host.clone();
@@ -171,16 +173,18 @@ async fn main() -> io::Result<()> {
                     //
                     //
                     // .service(web::resource("/invitation").route(web::post().to(register_email)))
-                    .service(
-                        web::resource("/register/{invitation_id}")
-                            .route(web::post().to(register_user)),
-                    )
-                    .service(
-                        web::resource("/password_change")
-                            .route(web::post().to(change_password_user)),
-                    ),
-                // .service(web::resource("/auth_url").route(web::post().to(auth_url)))
-                // .service(web::resource("/callback").route(web::get().to(callback))), // .service(web::resource("/status").route(web::get().to(status))),
+                    .service(web::scope("/categories").configure(users::init_routes)), // Take into account the comma of the last element
+                                                                                       // Registration
+                                                                                       // .service(
+                                                                                       //     web::resource("/register/{invitation_id}")
+                                                                                       //         .route(web::post().to(register_user)),
+                                                                                       // )
+                                                                                       // .service(
+                                                                                       //     web::resource("/password_change")
+                                                                                       //         .route(web::post().to(change_password_user)),
+                                                                                       // ),
+                                                                                       // .service(web::resource("/auth_url").route(web::post().to(auth_url)))
+                                                                                       // .service(web::resource("/callback").route(web::get().to(callback))), // .service(web::resource("/status").route(web::get().to(status))),
             )
         // .service(
         //     //         TODO check to avoid duplicate email activation. query from user table if email exists.

@@ -8,7 +8,7 @@ use chrono::{DateTime, Duration, Utc};
 
 #[derive(Serialize, Clone, Deserialize, PostgresMapper)]
 #[pg_mapper(table = "users")]
-pub struct Users {
+pub struct User {
     pub id: i32,
     pub username: String,
     pub password: String,

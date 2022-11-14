@@ -1,4 +1,4 @@
-use crate::users::{CreateUsers, Users};
+use crate::users::{CreateUsers, User};
 use deadpool_postgres::Client;
 use std::io;
 use tokio_pg_mapper::FromTokioPostgresRow;
@@ -24,7 +24,7 @@ pub async fn users_add(client: &Client, selfobj: CreateUsers) -> Result<CreateUs
         .query(
             &statement,
             &[
-                &selfobj.id,
+                // &selfobj.id,
                 &selfobj.username,
                 &selfobj.password,
                 &selfobj.email,
@@ -44,7 +44,7 @@ pub async fn users_add(client: &Client, selfobj: CreateUsers) -> Result<CreateUs
 
 // TODO populate fields
 
-pub async fn users_list(client: &Client) -> Result<Vec<Users>, io::Error> {
+pub async fn users_list(client: &Client) -> Result<Vec<User>, io::Error> {
     let statement = client
         .prepare("select * from public.users order by id desc")
         .await
@@ -55,13 +55,13 @@ pub async fn users_list(client: &Client) -> Result<Vec<Users>, io::Error> {
         .await
         .expect("Error getting author lists")
         .iter()
-        .map(|row| Users::from_row_ref(row).unwrap())
-        .collect::<Vec<Users>>();
+        .map(|row| User::from_row_ref(row).unwrap())
+        .collect::<Vec<User>>();
 
     Ok(users_list)
 }
 
-pub async fn users_id(client: &Client, id_users: i32) -> Result<Users, io::Error> {
+pub async fn users_id(client: &Client, id_users: i32) -> Result<User, io::Error> {
     let statement = client
         .prepare("select * from public.users where id = $1")
         .await
@@ -71,7 +71,7 @@ pub async fn users_id(client: &Client, id_users: i32) -> Result<Users, io::Error
         .query_opt(&statement, &[&id_users])
         .await
         .expect("Error adding users ")
-        .map(|row| Users::from_row_ref(&row).unwrap());
+        .map(|row| User::from_row_ref(&row).unwrap());
 
     match maybe_users {
         Some(users) => Ok(users),
@@ -85,10 +85,7 @@ pub async fn users_update(client: &Client, id: i32, mdl: CreateUsers) -> Result<
     let statement = client.prepare("update public.users set (id, username, password, email) = ($0, $1, $2, $3) where id = $3").await.unwrap();
 
     let result = client
-        .execute(
-            &statement,
-            &[&mdl.id, &mdl.username, &mdl.password, &mdl.email, &id],
-        )
+        .execute(&statement, &[&mdl.username, &mdl.password, &mdl.email, &id])
         .await
         .expect("Error getting todo lists");
 

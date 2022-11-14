@@ -1,7 +1,7 @@
 use crate::auth::user::User;
 // use crate::auth::{CallbackQuery, GetAuthUrlData, GoogleClient, Invitation, LoggedUser};
 use crate::auth::{Invitation, LoggedUser, Token};
-use crate::config::Config as Conf;
+use crate::configs::Config as Conf;
 use crate::errors::ServiceError;
 use actix_identity::Identity;
 use actix_web::{

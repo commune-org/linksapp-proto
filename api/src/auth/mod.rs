@@ -7,7 +7,7 @@ pub mod invite;
 pub mod model;
 pub mod password_handler;
 
-pub mod static_files;
+// pub mod static_files;
 pub mod token;
 pub mod user;
 pub mod utils;
@@ -19,7 +19,7 @@ pub use crate::auth::handlers::*;
 pub use crate::auth::invite::*;
 pub use crate::auth::model::*;
 
-pub use crate::auth::static_files::*;
+// pub use crate::auth::static_files::*;
 pub use crate::auth::token::*;
 pub use crate::auth::user::*;
 pub use crate::auth::utils::*;

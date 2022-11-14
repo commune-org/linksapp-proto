@@ -151,8 +151,8 @@ impl From<IoError> for ServiceError {
 impl fmt::Display for ServiceError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match *self {
-            ServiceError::Smtp(ref err) => err.fmt(f),
-            ServiceError::Mail(ref err) => err.fmt(f),
+            // ServiceError::Smtp(ref err) => err.fmt(f),
+            // ServiceError::Mail(ref err) => err.fmt(f),
             ServiceError::BadRequest(ref err) => err.fmt(f),
             ServiceError::InternalServerError(ref err) => err.fmt(f),
             ServiceError::Unauthorized(ref err) => err.fmt(f),
@@ -171,8 +171,8 @@ impl fmt::Display for ServiceError {
 impl StdError for ServiceError {
     fn description(&self) -> &str {
         match *self {
-            ServiceError::Smtp(_) => "can not create email",
-            ServiceError::Mail(_) => "can not build email",
+            // ServiceError::Smtp(_) => "can not create email",
+            // ServiceError::Mail(_) => "can not build email",
             ServiceError::BadRequest(_) => "Bad Request",
             ServiceError::InternalServerError(_) => "Internal Server Error",
             ServiceError::Unauthorized(_) => "Unauthorized",

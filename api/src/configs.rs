@@ -81,9 +81,11 @@ pub struct Config {
 
 impl Config {
     pub fn from_env() -> Result<Self, ConfigError> {
-        let mut cfg = config::Config::builder()
+        config::Config::builder()
             .add_source(config::Environment::default())
-            .build();
+            .build()
+            .unwrap()
+            .try_deserialize()
     }
 }
 

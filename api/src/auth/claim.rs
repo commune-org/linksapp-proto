@@ -1,4 +1,4 @@
-use crate::config;
+use crate::configs;
 use chrono::{Duration, Utc};
 use serde::{Deserialize, Serialize};
 // JWT claim
@@ -20,7 +20,7 @@ pub struct Claim {
 // TODO Duration::seconds, number of seconds should be in Config
 impl Claim {
     pub fn with_email(email: &str) -> Self {
-        let config = config::Config::from_env().unwrap();
+        let config = configs::Config::from_env().unwrap();
         let domain = config.srv_cnf.host.clone();
 
         Self {

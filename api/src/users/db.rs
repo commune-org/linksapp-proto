@@ -1,3 +1,4 @@
+use crate::errors::ServiceError;
 use crate::users::{CreateUsers, User};
 use deadpool_postgres::Client;
 use std::io;
@@ -10,12 +11,12 @@ use tokio_pg_mapper::FromTokioPostgresRow;
 // Decide wether to return id or return all fields from insert sql query . if return ID, insert id in function argument.
 // shift id in db tables to the top so we can skip it when not needed
 
-pub async fn users_add(client: &Client, selfobj: CreateUsers) -> Result<CreateUsers, io::Error> {
+pub async fn users_add(client: &Client, selfobj: CreateUsers) -> Result<CreateUsers, ServiceError> {
     let statement = client
         .prepare(
             "INSERT INTO public.users
-   (id, username, password, email)
-    VALUES ($0, $1, $2, $3) RETURNING id, username, password, email",
+   ( username, password, email)
+    VALUES ($1, $2, $3) RETURNING id, username, password, email",
         )
         .await
         .unwrap();
@@ -36,13 +37,17 @@ pub async fn users_add(client: &Client, selfobj: CreateUsers) -> Result<CreateUs
         .map(|row| CreateUsers::from_row_ref(row).unwrap())
         .collect::<Vec<CreateUsers>>()
         .pop()
-        .ok_or(io::Error::new(
-            io::ErrorKind::Other,
-            "Error creating users tables",
-        ))
+        .ok_or(ServiceError::DuplicateValue("Duplicate".to_owned()))
+    // .ok_or(io::Error::new(
+    //
+    //     io::ErrorKind::Other,
+    //     "Error creating users tables",
+    // ))
 }
 
-// TODO populate fields
+/*
+TODO populate fields
+*/
 
 pub async fn users_list(client: &Client) -> Result<Vec<User>, io::Error> {
     let statement = client

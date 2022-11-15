@@ -141,51 +141,47 @@ async fn main() -> io::Result<()> {
             )
             // TODO .wrap(Compress::default()) Check if compression is important for API
             // .wrap(middleware::NormalizePath::default())
-            .wrap(Logger::default())
+            //.wrap(Logger::default())
             .wrap(Logger::new(
-                "%a %r %s %b %% %U %{FOO}i %{FOO}o  %{User-Agent}i",
+                "%a %r %s %b %% %U %{FOO}i %{FOO}o  %{User-Agent}i ||| %D",
             ))
-            // .wrap(IdentityService::new(
-            //     CookieIdentityPolicy::new(&private_key)
-            //         .name("auth")
-            //         .path("/")
-            //         .domain(&domain)
-            //         .max_age(3600) //   TODO Parametize into config.rs
-            //         .secure(false),
-            // ))
-            .wrap(
-                SessionMiddleware::builder(CookieSessionStore::default(), Key::from(&private_key))
-                    .session_lifecycle(PersistentSession::default().session_ttl(Duration::days(1)))
-                    .cookie_name("auth".to_owned())
-                    .cookie_secure(false)
-                    .cookie_domain(Some(domain.clone()))
-                    .cookie_path("/".to_owned())
-                    .build(),
-            )
-            .service(
-                web::scope("/api")
-                    // .service(
-                    //     web::resource("/auth")
-                    //         .route(web::post().to(login))
-                    //         .route(web::delete().to(logout))
-                    //         .route(web::get().to(get_me)),
-                    // )
-                    //
-                    //
-                    // .service(web::resource("/invitation").route(web::post().to(register_email)))
-                    .service(web::scope("/categories").configure(users::init_routes)), // Take into account the comma of the last element
-                                                                                       // Registration
-                                                                                       // .service(
-                                                                                       //     web::resource("/register/{invitation_id}")
-                                                                                       //         .route(web::post().to(register_user)),
-                                                                                       // )
-                                                                                       // .service(
-                                                                                       //     web::resource("/password_change")
-                                                                                       //         .route(web::post().to(change_password_user)),
-                                                                                       // ),
-                                                                                       // .service(web::resource("/auth_url").route(web::post().to(auth_url)))
-                                                                                       // .service(web::resource("/callback").route(web::get().to(callback))), // .service(web::resource("/status").route(web::get().to(status))),
-            )
+            // .wrap(
+            //     SessionMiddleware::builder(
+            //         CookieSessionStore::default(),
+            //         Key::from(configs::SECRET_KEY.as_bytes()),
+            //     )
+            //     .session_lifecycle(PersistentSession::default().session_ttl(Duration::days(1)))
+            //     .cookie_name("auth".to_owned())
+            //     .cookie_secure(false)
+            //     .cookie_domain(Some(domain.clone()))
+            //     .cookie_path("/".to_owned())
+            //     .build(),
+            // )
+            .service(web::scope("/user").configure(users::init_routes))
+
+        //            .service(web::scope("/api"))
+        // .service(
+        //     web::resource("/auth")
+        //         .route(web::post().to(login))
+        //         .route(web::delete().to(logout))
+        //         .route(web::get().to(get_me)),
+        // )
+        //
+        //
+        // .service(web::resource("/invitation").route(web::post().to(register_email)))
+        // Take into account the comma of the last element
+        // Registration
+        // .service(
+        //     web::resource("/register/{invitation_id}")
+        //         .route(web::post().to(register_user)),
+        // )
+        // .service(
+        //     web::resource("/password_change")
+        //         .route(web::post().to(change_password_user)),
+        // ),
+        // .service(web::resource("/auth_url").route(web::post().to(auth_url)))
+        // .service(web::resource("/callback").route(web::get().to(callback))), // .service(web::resource("/status").route(web::get().to(status))),
+        //    )
         // .service(
         //     //         TODO check to avoid duplicate email activation. query from user table if email exists.
         //     web::scope("/auth")
@@ -221,6 +217,7 @@ async fn main() -> io::Result<()> {
         // .service(fs::Files::new("/", "./templates").show_files_listing())
     })
     .bind(bind_addr)?
+    .bind_uds("/tmp/linksapp-uds.socket")?
     .run()
     .await
 }

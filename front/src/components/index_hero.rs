@@ -58,6 +58,11 @@ pub fn HeroWidget<G: Html>(cx: Scope) -> View<G> {
         spawn_local_scoped(cx, async move { block.set(x) });
     };
 
+    let fetch_node = move |x| {
+        #[cfg(target_arch = "wasm32")]
+        spawn_local_scoped(cx, async move { block.set(x) });
+    };
+
     view! {cx,
 
         section (class="py-5") {div (class="container px-4 px-lg-5 my-5") {

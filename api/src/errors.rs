@@ -80,8 +80,12 @@ impl ResponseError for ServiceError {
             // ServiceError::Mail(ref message) => {
             //     HttpResponse::Unauthorized().json(message.to_string())
             // }
-            ServiceError::DuplicateValue(ref message) => HttpResponse::BadRequest().json(message),
+            ServiceError::Unauthorized(ref message) => HttpResponse::Unauthorized().json(message),
 
+            ServiceError::DuplicateValue(ref message) => {
+                HttpResponse::InternalServerError().json(message)
+            }
+            // ServiceError::DuplicateValue(ref message) => HttpResponse::BadRequest().json(message),
             ServiceError::GenericError(ref message) => HttpResponse::BadRequest().json(message),
             ServiceError::BlockingError(ref message) => HttpResponse::BadRequest().json(message),
         }

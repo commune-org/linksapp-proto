@@ -8,6 +8,13 @@ use std::{
     sync::Arc,
 };
 
+use once_cell::sync::Lazy;
+
+pub static SECRET_KEY: Lazy<String> =
+    Lazy::new(|| std::env::var("SECRET_KEY").unwrap_or_else(|_| "0123".repeat(8)));
+
+const SALT: &[u8] = b"supersecuresalt";
+
 pub const KEY_LENGTH: usize = 32;
 
 type SecretKey = [u8; KEY_LENGTH];

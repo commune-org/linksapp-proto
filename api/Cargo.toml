@@ -11,7 +11,7 @@ actix = "0.13.0"
 actix-rt = "2.7.0"
 actix-web = "4.2.1"
 # actix-web = { version = "4.2.1", features = ["cookies", "secure-cookies"] }
-
+once_cell = "1"
 actix-cors = "0.6.4"
 # actix-session = "0.7.2"
 actix-session = { version = "0.7.2", features = ["cookie-session"] }

@@ -1,3 +1,5 @@
+use crate::httpreq::model::User;
+
 use super::add_link::AddLinkWidget;
 use super::hero_confirm::HeroConfirm;
 use super::{hero_mobile::MobileWidget, hero_signup::HeroSignup};
@@ -11,6 +13,11 @@ use sycamore::prelude::*;
 
 use wasm_bindgen::JsCast;
 use web_sys::{Event, HtmlInputElement, KeyboardEvent};
+
+#[derive(Debug, Clone)]
+pub struct UserState {
+    pub user: RcSignal<User>,
+}
 
 #[derive(Debug, Clone, Display, Copy)]
 pub enum Block {
@@ -55,11 +62,6 @@ pub fn HeroWidget<G: Html>(cx: Scope) -> View<G> {
     // let update = move |x| block.set(x);
     // // let b = *block.get();
     let update_node = move |x| {
-        spawn_local_scoped(cx, async move { block.set(x) });
-    };
-
-    let fetch_node = move |x| {
-        #[cfg(target_arch = "wasm32")]
         spawn_local_scoped(cx, async move { block.set(x) });
     };
 

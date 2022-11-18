@@ -21,7 +21,7 @@ pub async fn users_add(client: &Client, selfobj: CreateUsers) -> Result<CreateUs
         .await
         .unwrap();
 
-    client
+    let res = client
         .query(
             &statement,
             &[
@@ -31,18 +31,25 @@ pub async fn users_add(client: &Client, selfobj: CreateUsers) -> Result<CreateUs
                 &selfobj.email,
             ],
         )
-        .await
-        .expect("Error creating users")
-        .iter()
-        .map(|row| CreateUsers::from_row_ref(row).unwrap())
-        .collect::<Vec<CreateUsers>>()
-        .pop()
-        .ok_or(ServiceError::DuplicateValue("Duplicate".to_owned()))
+        .await?
+        .last()
+        .map(|row| CreateUsers::from_row_ref(row).unwrap());
+    //        .collect::<Vec<CreateUsers>>()
+    //        .pop();
+    //.unwrap()?;
+    // .ok_or(ServiceError::DuplicateValue(err))
     // .ok_or(io::Error::new(
     //
     //     io::ErrorKind::Other,
     //     "Error creating users tables",
     // ))
+    // let maybe
+
+    match res {
+        Some(x) => Ok(x),
+        None => Err(ServiceError::DuplicateValue("duplicate Value".to_string())), // Err(e) => HttpResponse::InternalServerError().json(e.to_string())
+    }
+    // Ok(res)
 }
 
 /*
@@ -66,7 +73,7 @@ pub async fn users_list(client: &Client) -> Result<Vec<User>, io::Error> {
     Ok(users_list)
 }
 
-pub async fn users_id(client: &Client, id_users: i32) -> Result<User, io::Error> {
+pub async fn users_id(client: &Client, id_users: i32) -> Result<User, ServiceError> {
     let statement = client
         .prepare("select * from public.users where id = $1")
         .await
@@ -80,7 +87,7 @@ pub async fn users_id(client: &Client, id_users: i32) -> Result<User, io::Error>
 
     match maybe_users {
         Some(users) => Ok(users),
-        None => Err(io::Error::new(io::ErrorKind::NotFound, "Not found")),
+        None => Err(ServiceError::NotFound("NotFound".to_string())),
     }
 }
 

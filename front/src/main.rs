@@ -1,7 +1,7 @@
 mod components;
 mod error_pages;
+mod httpreq;
 mod templates;
-
 use components::footer::FooterWidget;
 use components::header::HeaderWidget;
 

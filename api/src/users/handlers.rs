@@ -35,7 +35,8 @@ pub async fn add_users(
 
     match result {
         Ok(object) => HttpResponse::Ok().json(object),
-        Err(_) => HttpResponse::InternalServerError().into(),
+        Err(e) => HttpResponse::InternalServerError().json(e.to_string()),
+        // Err(_) => HttpResponse::InternalServerError().into(),
     }
 }
 
@@ -50,7 +51,8 @@ pub async fn get_users(id_users: web::Path<(i32,)>, db_pool: web::Data<Pool>) ->
 
     match result {
         Ok(object) => HttpResponse::Ok().json(object),
-        Err(ref e) if e.kind() == NotFound => HttpResponse::NotFound().into(),
+        // Err(ref e) if e.kind() == NotFound => HttpResponse::NotFound().into(),
+        Err(e) => HttpResponse::NotFound().json(e.to_string()),
         Err(_) => HttpResponse::InternalServerError().into(),
     }
 }

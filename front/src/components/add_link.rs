@@ -11,12 +11,13 @@ pub fn AddLinkWidget<G: Html>(cx: Scope) -> View<G> {
 
     view! {cx,
 
-           div (class="col-sm-10 p-3") {
-               div (class="input-group") {
-                   span (class="input-group-text") {"TItle - Url"}
-                   input (class="form-control", type="text", aria-label="Title", placeholder="Title") {}
-                   input (class="form-control", type="text", aria-label="Url", placeholder="Url") {}
+           div (class="col-sm-7 p-3") {
+               div (class="input-group mb-3") {
+                   input (class="form-control", type="password",  placeholder="Password")
+                   button( class="btn btn-outline-secondary", id="button-addon2", type="button") { "register" }
+
                    // button (on:click=move |_| update_node(Block::CreateLink), class="btn btn-outline-secondary", id="button-addon2", type="button") {"Add"}
+                   //
             }
 
         }

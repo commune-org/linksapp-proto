@@ -1,4 +1,5 @@
 pub mod model;
+pub mod user;
 // use anyhow::Result;
 // use async_recursion::async_recursion;
 

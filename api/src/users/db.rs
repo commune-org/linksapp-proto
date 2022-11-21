@@ -91,6 +91,43 @@ pub async fn users_id(client: &Client, id_users: i32) -> Result<User, ServiceErr
     }
 }
 
+pub async fn user_link(client: &Client, id_users: String) -> Result<User, ServiceError> {
+    let statement = client
+        .prepare("select * from public.users where linkname = $1")
+        .await
+        .unwrap();
+
+    let maybe_users = client
+        .query_opt(&statement, &[&id_users])
+        .await
+        .expect("Error finding users ")
+        .map(|row| User::from_row_ref(&row).unwrap());
+
+    match maybe_users {
+        Some(link) => Ok(link),
+        None => Err(ServiceError::NotFound("NotFound".to_string())),
+    }
+}
+//error retrieving column count: error deserializing column 0: cannot convert between the Rust type `core::option::Option<i8>` and the Postgres type `int8`',
+pub async fn user_count(client: &Client, id_users: String) -> Result<i8, ServiceError> {
+    let statement = client
+        .prepare("select count(*) from public.users where linkname = $1")
+        .await
+        .unwrap();
+
+    let maybe_count = client
+        .query_one(&statement, &[&id_users])
+        .await
+        .expect("Error finding users ");
+
+    let res = maybe_count.get("count");
+    //println!("{:?}", &res);
+    match res {
+        Some(link) => Ok(link),
+        None => Err(ServiceError::NotFound("NotFound".to_string())),
+    }
+}
+
 //TODO take into account ID position
 
 pub async fn users_update(client: &Client, id: i32, mdl: CreateUsers) -> Result<(), io::Error> {

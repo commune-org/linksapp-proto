@@ -30,7 +30,7 @@ reqwest = "0.11"
 hyper = { version = "0.14", features = ["full"] }
 pretty_env_logger = "0.4"
 hyperlocal = "0.8"
-reqwasm = "0.4.1"
+# reqwasm = "0.4.1"
 [target.'cfg(target_arch = "wasm32")'.dependencies]
 reqwasm = "0.4"
 rexie = "0.4.2"

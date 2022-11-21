@@ -9,11 +9,13 @@ use perseus::{web_log, Html, PerseusApp, PerseusRoot};
 
 use std::collections::HashMap;
 
+use std::env;
 use std::path::Path;
 use walkdir::WalkDir;
 
 #[perseus::main(perseus_actix_web::dflt_server)]
 pub fn main<G: Html>() -> PerseusApp<G> {
+    env::set_var("RUST_BACKTRACE", "full");
     let mut static_paths: HashMap<String, String> = HashMap::new();
 
     let pathstr = env!("CARGO_MANIFEST_DIR");

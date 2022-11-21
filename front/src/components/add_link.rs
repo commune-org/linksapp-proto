@@ -15,7 +15,6 @@ pub fn AddLinkWidget<G: Html>(cx: Scope) -> View<G> {
                div (class="input-group mb-3") {
                    input (class="form-control", type="password",  placeholder="Password")
                    button( class="btn btn-outline-secondary", id="button-addon2", type="button") { "register" }
-
                    // button (on:click=move |_| update_node(Block::CreateLink), class="btn btn-outline-secondary", id="button-addon2", type="button") {"Add"}
                    //
             }

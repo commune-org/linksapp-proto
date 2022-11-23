@@ -8,8 +8,8 @@ use std::collections::HashMap;
 
 // pub mod auth;
 pub mod configs;
+pub mod links;
 pub mod users;
-
 // pub mod content;
 pub mod errors;
 // pub mod mail;
@@ -158,6 +158,7 @@ async fn main() -> io::Result<()> {
             //     .build(),
             // )
             .service(web::scope("/user").configure(users::init_routes))
+            .service(web::scope("/link").configure(links::init_routes))
 
         //            .service(web::scope("/api"))
         // .service(

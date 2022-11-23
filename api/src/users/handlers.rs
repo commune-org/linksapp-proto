@@ -39,23 +39,23 @@ pub async fn add_users(
         // Err(_) => HttpResponse::InternalServerError().into(),
     }
 }
-// //error retrieving column count: error deserializing column 0: cannot convert between the Rust type `core::option::Option<i8>` and the Postgres type `int8`',
-// #[get("/{id}/")]
-// pub async fn get_count(id_users: web::Path<(String,)>, db_pool: web::Data<Pool>) -> impl Responder {
-//     let client: Client = db_pool
-//         .get()
-//         .await
-//         .expect("Error connecting to the database");
 
-//     let result = db::user_count(&client, id_users.0.clone()).await;
+#[get("/{id}/")]
+pub async fn get_count(id_users: web::Path<(String,)>, db_pool: web::Data<Pool>) -> impl Responder {
+    let client: Client = db_pool
+        .get()
+        .await
+        .expect("Error connecting to the database");
 
-//     match result {
-//         Ok(object) => HttpResponse::Ok().json(object),
-//         // Err(ref e) if e.kind() == NotFound => HttpResponse::NotFound().into(),
-//         Err(e) => HttpResponse::NotFound().json(e.to_string()),
-//         //Err(_) => HttpResponse::InternalServerError().into(),
-//     }
-// }
+    let result = db::user_count(&client, id_users.0.clone()).await;
+
+    match result {
+        Ok(object) => HttpResponse::Ok().json(object),
+        // Err(ref e) if e.kind() == NotFound => HttpResponse::NotFound().into(),
+        Err(e) => HttpResponse::NotFound().json(e.to_string()),
+        //Err(_) => HttpResponse::InternalServerError().into(),
+    }
+}
 
 #[get("/{id}")]
 pub async fn get_link(id_users: web::Path<(String,)>, db_pool: web::Data<Pool>) -> impl Responder {
@@ -115,7 +115,6 @@ pub fn init_routes(cfg: &mut web::ServiceConfig) {
     cfg.service(add_users);
     cfg.service(update_users);
     cfg.service(get_link);
-    // cfg.service(get_count);
     cfg.service(delete_users);
 }
 

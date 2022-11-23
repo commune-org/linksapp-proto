@@ -6,6 +6,7 @@ pub struct User {
     pub password: String,
     pub email: String,
 }
+
 #[derive(Serialize, Debug, Default, Clone, Deserialize)]
 pub struct Link {
     pub linkname: String,

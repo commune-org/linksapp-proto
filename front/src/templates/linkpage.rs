@@ -2,7 +2,7 @@ use perseus::{Html, RenderFnResultWithCause, SsrNode, Template};
 use sycamore::prelude::{view, Scope, View};
 
 #[perseus::make_rx(LinkPageStateRx)]
-#[derive(serde::Serialize, serde::Deserialize)]
+// #[derive(serde::Serialize, serde::Deserialize)]
 pub struct LinkPageState {
     pub greeting: String,
 }

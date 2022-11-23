@@ -2,7 +2,7 @@ use gloo_net::http::Request;
 // use serde_json::json;
 use futures::future::join_all;
 
-use super::model::{Link, User};
+use super::model::Link;
 use super::{BASE_API_URL, LINK_API};
 
 // pub async fn get_story_preview(id: i64) -> Result<StoryItem> {

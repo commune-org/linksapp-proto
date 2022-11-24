@@ -6,7 +6,7 @@ use sycamore::prelude::*;
 use sycamore::prelude::{view, View};
 
 // #[perseus::template_rx]
-#[perseus::template(IndexPage)]
+#[perseus::template_rx(IndexPage)]
 #[component(IndexPage<G>)]
 pub fn index_page<G: Html>(cx: Scope) -> View<G> {
     view! { cx,

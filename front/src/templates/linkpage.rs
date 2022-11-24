@@ -2,25 +2,29 @@ use perseus::{Html, RenderFnResultWithCause, Template};
 // use sycamore::prelude::{view, Scope, View};
 use sycamore::prelude::{view, Scope, SsrNode, View};
 
-use crate::httpreq::model::LinkRx;
+use crate::httpreq::model::Link;
 
 #[perseus::make_rx(LinkPageStateRx)]
-// #[derive(serde::Serialize, serde::Deserialize)]
 pub struct LinkPageState {
-    pub greeting: String,
+    // pub ls: Link,
+    pub ls: String,
+    pub path: String,
 }
-#[perseus::template(LinkPage)]
+#[perseus::template_rx(LinkPage)]
 ////#[perseus::template]
-pub fn link_page<'a, G: Html>(cx: Scope<'a>, lk: LinkRx<'a>) -> View<G> {
+pub fn link_page<'a, G: Html>(cx: Scope<'a>, lk: LinkPageStateRx<'a>) -> View<G> {
     view! { cx,
-        p { (lk.linkname.get()) }
+        p { (lk.ls.get()) }
+        p { (lk.path.get()) }
+
         a(href = "about", id = "about-link") { "About!" }
     }
 }
 
 pub fn get_template<G: Html>() -> Template<G> {
-    Template::new("index")
-        //.build_state_fn(get_build_state)
+    Template::new("link")
+        .build_state_fn(get_build_state)
+        .build_paths_fn(get_build_paths)
         .template(link_page)
         .head(head)
 }
@@ -34,10 +38,18 @@ pub fn head(cx: Scope, _props: LinkPageState) -> View<SsrNode> {
 
 #[perseus::build_state]
 pub async fn get_build_state(
-    _path: String,
+    pth: String,
     _locale: String,
 ) -> RenderFnResultWithCause<LinkPageState> {
+    let path = &pth;
+    let lkx = format!("the path: link: {}", &path);
     Ok(LinkPageState {
-        greeting: "Hello World!".to_string(),
+        path: path.to_string(),
+        ls: lkx,
     })
+}
+
+#[perseus::build_paths]
+pub async fn get_build_paths() -> perseus::RenderFnResult<Vec<String>> {
+    Ok(vec!["".to_string(), "lx".to_string()])
 }

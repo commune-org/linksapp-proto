@@ -79,7 +79,11 @@ pub async fn get_build_state(
             // let resp = client.get(uri).await?;
             // Ok::<String, hyper::Error>(resp.status().to_string())
 
-            let url = Uri::new("/tmp/linksapp-uds.socket", "/link/").into();
+            let url = Uri::new(
+                "/tmp/linksapp-uds.socket",
+                format!("/link/{}", path.clone()),
+            )
+            .into();
 
             let client = Client::unix();
 
@@ -113,26 +117,13 @@ pub async fn get_build_state(
 
 #[perseus::build_paths]
 pub async fn get_build_paths() -> perseus::RenderFnResult<Vec<String>> {
-    //let dyn_path = link_list().await.unwrap_or_default();
-    // let vec_key: Vec<String> = dyn_path.iter().map(|p| p.linkname).collect();
     let body = perseus::utils::cache_fallible_res(
         "ipify",
         || async {
-            // This just gets the IP address of the machine that built the app
-            // let res = reqwest::get("https://api.ipify.org").await?.text().await?;
-            // Ok::<String, reqwest::Error>(res)
-
             use hyper::{body::HttpBody, Client};
             use hyperlocal::{UnixClientExt, Uri};
             use std::error::Error;
             use tokio::io::{self, AsyncWriteExt as _};
-
-            // let client = hyper::Client::new();
-
-            // let uri = "http://httpbin.org/ip".parse().unwrap();
-            // // Await the response...
-            // let resp = client.get(uri).await?;
-            // Ok::<String, hyper::Error>(resp.status().to_string())
 
             let url = Uri::new("/tmp/linksapp-uds.socket", "/link/").into();
 
@@ -146,17 +137,11 @@ pub async fn get_build_paths() -> perseus::RenderFnResult<Vec<String>> {
             }
 
             let bres = String::from_utf8(bytes).unwrap();
-            // let res = response.unwrap().status().to_string();
             let lnx: Vec<Link> = serde_json::from_str(&bres).unwrap();
 
             let paths: Vec<String> = lnx.into_iter().map(|p| p.linkname).collect();
 
             Ok::<Vec<String>, hyper::Error>(paths)
-
-            // while let Some(next) = response {
-            //     let chunk = next?;
-            //     io::stdout().write_all(&chunk).await?;
-            // }
         },
         true,
     )

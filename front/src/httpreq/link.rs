@@ -19,6 +19,15 @@ pub async fn link_status(ln: &str) -> Result<u16, gloo_net::Error> {
     Ok(req_status)
 }
 
+pub async fn link_list() -> Result<String, gloo_net::Error> {
+    let url = format!("{}/{}/", BASE_API_URL, LINK_API);
+    let resp = Request::get(&url).send().await?;
+
+    let body = resp.json::<String>().await?;
+    //let req_status = resp.status();
+    Ok(body)
+}
+
 pub async fn fetch_link(l: &str) -> Result<String, gloo_net::Error> {
     let url = format!("{}/{}/{}/", BASE_API_URL, LINK_API, l);
     let resp = Request::get(&url).send().await?;

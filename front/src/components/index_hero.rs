@@ -86,6 +86,7 @@ pub fn HeroWidget<G: Html>(cx: Scope) -> View<G> {
             // }
         });
     };
+
     // // let update_node = move |x| {
     // //     spawn_local_scoped(cx, async move { block.set(x) });
     // // };

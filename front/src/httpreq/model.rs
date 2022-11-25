@@ -11,7 +11,7 @@ pub struct User {
 
 //#[derive(Debug)]
 //#[perseus::make_rx(LinkRx)]
-#[derive(Serialize, Debug, Default, Clone, Deserialize)]
+#[derive(Serialize, Debug, PartialEq, Eq, Default, Clone, Deserialize)]
 pub struct Link {
     pub linkname: String,
 }

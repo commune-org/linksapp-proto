@@ -4,72 +4,88 @@ use sycamore::prelude::*;
 pub fn HeroProfile<G: Html>(cx: Scope) -> View<G> {
     view! {cx,
 
-               section (class="bg-profile d-table w-100 bg-primary", style="background: url('assets/images/account/bg.png') center center;") {div (class="container") {
-        div (class="row") {
-          div (class="col-lg-12") {
-            div (class="card public-profile border-0 rounded shadow", style="z-index: 1;") {
-              div (class="card-body") {
-                div (class="row align-items-center") {
-                  div (class="col-lg-2 col-md-3 text-md-start text-center") {
-                    img (src="assets/images/client/05.jpg", class="avatar avatar-large rounded-circle shadow d-block mx-auto", alt="") {}
+            section (class="py-5 d-flex justify-content-center") {div (class="col-md-6") {
+                    div (class="smartphone") {
+                        div (class="device-header") {
+                            div (class="proximity")
+
+                            div (class="camera")
+
+                            div (class="speaker")
+
+                        }
+
+                        div (class="content bg-primary bg-gradient bg-opacity-10") {
+                            div (class="card text-center bg-transparent border-0 p-2") {
+                                div (class="card-body p-1") {
+                                    div (class="position-relative") {img (class="img-fluid avatar avatar-md-md rounded-circle shadow-lg w-25 h-25", src="assets/images/client/profile.png", alt="")
     }
 
+                                }
 
-                  div (class="col-lg-10 col-md-9") {
-                    div (class="row align-items-end") {
-                      div (class="col-md-7 text-md-start text-center mt-4 mt-sm-0") {
-                        h3 (class="title mb-0") {"Flash Tech"}
+                            }
 
-                        small (class="text-muted h6 me-2") {"Web Developer"}
+                            h3 (class="bg-soft-primary text-center p-2") {
+                                "Flash Alx."
+                                div (class="container m-2") {
+                                    i (class="bi bi-github")
 
-                        ul (class="list-inline mb-0 mt-3") {li (class="list-inline-item me-2") {a (href="javascript:void(0)", class="text-muted", title="Instagram") {i (data-feather="instagram", class="fea icon-sm me-2") {}
-    "@flashtech"}
+                                    i (class="bi bi-linkedin")
+
+                                    i (class="bi bi-discord")
+
+                                }
+
+                            }
+
+                            div (class="d-flex justify-content-center p-2") {
+                                div (class="card") {div (class="card-body") {"This This is John X, some text contents is some text within a card body and additional 3 linestext."}
     }
 
-                          li (class="list-inline-item") {a (href="javascript:void(0)", class="text-muted", title="Linkedin") {i (data-feather="linkedin", class="fea icon-sm me-2") {}
-    "Flash Tech"}
+                            }
+
+                            div (class="container m-2") {
+                                ul (class="list-group") {li (class="list-group-item d-flex justify-content-between align-items-center") {
+                                        "My latest update"
+                                        span (class="badge bg-dark rounded-pill") {i (class="bi bi-github")
+    }
+
+                                    }
+
+                                    li (class="list-group-item d-flex justify-content-between align-items-center") {
+                                        "Come let's talk"
+                                        span (class="badge bg-primary rounded-pill") {i (class="bi bi-discord")
+    }
+
+                                    }
+
+                                    li (class="list-group-item d-flex justify-content-between align-items-center") {
+                                        "An important event not to miss"
+                                        span (class="badge bg-primary rounded-pill") {i (class="bi bi-calendar-date")
+    }
+
+                                    }
+
+                                    li (class="list-group-item d-flex justify-content-between align-items-center") {
+                                        "A new Software Release"
+                                        span (class="badge bg-dark rounded-pill") {i (class="bi bi-github")
+    }
+
+                                    }
+
+                                }
     }
 
                         }
-    }
-
-                      div (class="col-md-5 text-md-end text-center") {
-                        ul (class="list-unstyled social-icon social mb-0 mt-4") {li (class="list-inline-item") {a (href="javascript:void(0)", class="rounded", data-bs-toggle="tooltip", data-bs-placement="bottom", title="Add Friend") {i (class="uil uil-user-plus align-middle") {}
-    }
-    }
-
-                          li (class="list-inline-item") {a (href="javascript:void(0)", class="rounded", data-bs-toggle="tooltip", data-bs-placement="bottom", title="Messages") {i (class="uil uil-comment align-middle") {}
-    }
-    }
-
-                          li (class="list-inline-item") {a (href="javascript:void(0)", class="rounded", data-bs-toggle="tooltip", data-bs-placement="bottom", title="Notifications") {i (class="uil uil-bell align-middle") {}
-    }
-    }
-
-                          li (class="list-inline-item") {a (href="account-setting.html", class="rounded", data-bs-toggle="tooltip", data-bs-placement="bottom", title="Settings") {i (class="uil uil-cog align-middle") {}
-    }
-    }
-
-                        }
-    }
 
                     }
 
-                  }
-
                 }
-
-              }
 
             }
 
-          }
 
-        }
 
-      }
 
-    }
-
-                }
+                    }
 }

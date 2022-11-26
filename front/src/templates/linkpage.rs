@@ -18,7 +18,7 @@ pub struct LinkPageState {
 pub fn link_page<'a, G: Html>(cx: Scope<'a>, lk: LinkPageStateRx<'a>) -> View<G> {
     view! { cx,
          // p { (lk.ls.get()) }
-     //     p { (lk.path.get()) }
+          p { (lk.path.get()) }
      //         ul {
      //     Indexed(
      //         iterable=lk.ls,
@@ -78,12 +78,9 @@ pub async fn get_build_state(
             // // Await the response...
             // let resp = client.get(uri).await?;
             // Ok::<String, hyper::Error>(resp.status().to_string())
+            let pt = pth.as_str();
 
-            let url = Uri::new(
-                "/tmp/linksapp-uds.socket",
-                format!("/link/{}", path.clone()),
-            )
-            .into();
+            let url = Uri::new("/tmp/linksapp-uds.socket", "/link/").into();
 
             let client = Client::unix();
 

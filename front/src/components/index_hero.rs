@@ -145,7 +145,7 @@ pub fn HeroWidget<G: Html>(cx: Scope) -> View<G> {
 
         (                             match *req_status.get() {
                                             // 200 => view!{cx,    h3{a(href = usrlink.get(), id = "about-link", class="bg-soft-primary text-center") { (usrlink.get()) } }  },
-                                            200 => view!{cx,  h2(class="p-2 bd-highlight text-center") {a (class="btn btn-outline-primary btn-lg", href=usrlink.get()) {(usrlink.get())}}
+                                            200 => view!{cx,  h2(class="p-2 bd-highlight text-center") {a (class="btn btn-outline-primary btn-lg", href=format!("link/{}",usrlink.get())) {(usrlink.get())}}
                                                          p{} MobileWidget()
                                             },
                                               _ => view!{cx, div{""}}, //wicked bug! todo()
